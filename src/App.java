@@ -43,6 +43,7 @@ public class App extends PApplet {
         line9.setup(250,500,400,500);
         line10.setup(300,100,300,400);
         line11.setup(300,400,350,400);
+        line12.setup(250,100,300,100);
 
 
     }

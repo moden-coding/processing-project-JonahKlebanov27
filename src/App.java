@@ -1,25 +1,49 @@
 import processing.core.*;
 
+
 public class App extends PApplet {
 
-    float x1, y1, x2, y2, x3, y3;
+    
+    MyTriangle tri; 
+    MyLine line, line2, line3, line4, line5, line6, line7,line8,line9,line10,line11,line12,line13;
     float speed = 20;
 
-    float lineX1 = 100, lineY1 = 600, lineX2 = 100, lineY2 = 100;
-
-    public static void main(String[] args) {
+    
+       public static void main(String[] args) {
         PApplet.main("App");
     }
 
     public void setup() {
         float centerX = 50;
         float centerY = 550;
-        x1 = centerX;
-        y1 = centerY - 25;
-        x2 = centerX - 25;
-        y2 = centerY + 25;
-        x3 = centerX + 25;
-        y3 = centerY + 25;
+        tri = new MyTriangle();
+        tri.setup(centerX, centerY); 
+        line = new MyLine();
+        line2= new MyLine();
+        line3= new MyLine();
+        line4= new MyLine();
+        line5= new MyLine();
+        line6= new MyLine();
+        line7= new MyLine();
+        line8= new MyLine();
+        line9= new MyLine();
+        line10= new MyLine();
+        line11= new MyLine();
+        line12= new MyLine();
+        line13= new MyLine();
+
+        line.setup(100,600,100,100);
+        line2.setup(100,100,150,100); 
+        line3.setup(0,0,0,600);
+        line4.setup(0,0,800,0);
+        line5.setup(800,0,800,600);
+        line6.setup(800,600,0,600);
+        line7.setup(150,100,150,600);
+        line8.setup(250,100,250,500);
+        line9.setup(250,500,400,500);
+        line10.setup(300,100,300,400);
+        line11.setup(300,400,350,400);
+
 
     }
 
@@ -32,11 +56,25 @@ public class App extends PApplet {
         fill(0, 90, 175);
         stroke(200, 0, 0);
         strokeWeight(5);
-        triangle(x1, y1, x2, y2, x3, y3);
-
+        tri.draw(this);
+  
         stroke(0);
         strokeWeight(2);
-        line(lineX1,lineY1,lineX2,lineY2);
+        
+        line.draw(this);
+        line2.draw(this);
+        line3.draw(this);
+        line4.draw(this);
+        line5.draw(this);
+        line6.draw(this);
+        line7.draw(this);
+        line8.draw(this);
+        line9.draw(this);
+        line10.draw(this);
+        line11.draw(this);
+        line12.draw(this);
+        line13.draw(this);
+        
 
     }
 
@@ -58,34 +96,27 @@ public class App extends PApplet {
     
 
     public void moveTriangle(float deltaX, float deltaY) {
-        x1 += deltaX;
-        y1 += deltaY;
-        x2 += deltaX;
-        y2 += deltaY;
-        x3 += deltaX;
-        y3 += deltaY;
+        tri.move(deltaX, deltaY);
 
     }
 
     public boolean willTriangleCrossLine(float deltaX, float deltaY) {
 
-        float newX1 = x1 + deltaX;
-        float newX2 = x2 + deltaX;
-        float newX3 = x3 + deltaX; 
 
+        MyTriangle temptr = new MyTriangle(tri);
+        temptr.move(deltaX, deltaY);
         
-        
-        
-
-        System.out.println(newX1 > lineX1);
-        System.out.println(newX2 > lineX1);
-        System.out.println(newX3 > lineX1);
-
-        if (newX1 > lineX1 || newX2 > lineX1 || newX3 > lineX1) {
+        if(temptr.IntersectsWithLine(line)  || temptr.IntersectsWithLine(line2) || temptr.IntersectsWithLine(line3) || temptr.IntersectsWithLine(line4) || temptr.IntersectsWithLine(line5) || temptr.IntersectsWithLine(line6) || temptr.IntersectsWithLine(line7) || temptr.IntersectsWithLine(line8) || temptr.IntersectsWithLine(line9) || temptr.IntersectsWithLine(line10) || temptr.IntersectsWithLine(line11) || temptr.IntersectsWithLine(line12) || temptr.IntersectsWithLine(line13)){
             return true;
+            
+
+
+        }else{
+            return false;
 
         }
-        return false; 
+
+        
 
         
     }

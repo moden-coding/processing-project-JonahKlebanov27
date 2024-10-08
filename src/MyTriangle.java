@@ -22,11 +22,11 @@ public class MyTriangle {
     public void setup(float centerX, float centerY)
     {
         x1 = centerX;
-        y1 = centerY - 25;
-        x2 = centerX - 25;
-        y2 = centerY + 25;
-        x3 = centerX + 25;
-        y3 = centerY + 25;
+        y1 = centerY - 10;
+        x2 = centerX - 10;
+        y2 = centerY + 10;
+        x3 = centerX + 10;
+        y3 = centerY + 10;
 
     }
     public void draw(PApplet p)
@@ -42,6 +42,16 @@ public class MyTriangle {
         y2 += deltaY;
         x3 += deltaX;
         y3 += deltaY;
+
+    }
+    public boolean IntersectsWithObstacle(Obstacle ob){
+        if(IntersectsWithLine(ob.top) ||IntersectsWithLine(ob.bottom)|| IntersectsWithLine(ob.right) || IntersectsWithLine(ob.left)){
+           return true;
+
+        }else{
+            return false;
+
+        }
 
     }
 

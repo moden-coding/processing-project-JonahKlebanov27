@@ -28,7 +28,19 @@ public class Obstacle {
 
     }
 
+
+    public void move(float x, float y){
+       top.move(x,y);
+       right.move(x,y);
+       left.move(x,y);
+       bottom.move(x,y);
+
+       
+       
+
+
+    }
+      
+ }
     
 
-    
-}

@@ -7,7 +7,7 @@ public class App extends PApplet {
     MyTriangle tri; 
     MyLine line, line2, line3, line4, line5, line6, line7,line8,line9,line10,line11,line12,line13,line14,line15,line16;
     float speed = 10; 
-    Obstacle ob;
+    Obstacle ob, ob1,ob2;
       
     float initialCenterX = 50;
     float initialCenterY = 550;
@@ -58,21 +58,34 @@ public class App extends PApplet {
         line15.setup(700,350,700,200);
         line16.setup(400,0,400,75); 
 
+        
+        
         ob= new Obstacle();
-        ob.setup(obj_left_boundary,300, 20); 
+        ob.setup(10,300, 20); 
+        ob.setboundaries(10,0,0,140);
+        ob.setspeed(3.5f);
+       
+       
+        ob1= new Obstacle();
+        ob1.setup(160,200,20);
+        ob1.setboundaries(160,0,0,540);
+        ob1.setspeed(15); 
+
+        ob2= new Obstacle();
+        ob2.setup(160,300,20);
+        ob2.setboundaries(160,0,0,540);
+        ob2.setspeed(15);
 
         
 
+        
+        
 
     }
 
-    float obj_left_boundary = 10;
-    float obj_right_boundary = 140;
-    boolean obj_moving_right = true;
-    float obj_position_x = obj_left_boundary;  
 
-    float obj2_top_boundary = 140;
-    float obj_bottom_boundary = 340;
+
+    
 
 
     public void settings() {
@@ -108,41 +121,35 @@ public class App extends PApplet {
         line16.draw(this);
 
         ob.draw(this); 
+        ob1.draw(this);
+        ob2.draw(this);
         textSize(20);
         text("finish",725,325); 
         
-        if (obj_moving_right) {
-            ob.move(3.5f,0); 
-            obj_position_x += 3.5f;
-            if (obj_position_x >= obj_right_boundary) {
-                obj_moving_right = false;
-            }
-        }
-        else {
-            ob.move(-3.5f,0); 
-            obj_position_x -= 3.5f;
-            if(obj_position_x <= obj_left_boundary){
-                obj_moving_right = true;
-            }
-        } 
+        
 
-        if(obj2_moving_top){
-            
-        }
+        
+
+        
        
         if (tri.IntersectsWithObstacle(ob)) {
             resetTriangle();  // Reset triangle to starting position if it touches the obstacle
         }
        
-       
+        if (tri.IntersectsWithObstacle(ob1)) {
+            resetTriangle();  // Reset triangle to starting position if it touches the obstacle
+        }
       
-
-        
-
-
-        
-
+        if (tri.IntersectsWithObstacle(ob2)) {
+            resetTriangle();  // Reset triangle to starting position if it touches the obstacle
+        }
     }
+        
+
+
+        
+
+    
 
       
     public void resetTriangle() {

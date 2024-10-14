@@ -7,7 +7,7 @@ public class App extends PApplet {
     MyTriangle tri; 
     MyLine line, line2, line3, line4, line5, line6, line7,line8,line9,line10,line11,line12,line13,line14,line15,line16;
     float speed = 10; 
-    Obstacle ob, ob1,ob2;
+    Obstacle ob,ob1,ob2,ob3,ob4,ob5,ob6,ob7;
       
     float initialCenterX = 50;
     float initialCenterY = 550;
@@ -65,7 +65,6 @@ public class App extends PApplet {
         ob.setboundaries(10,0,0,140);
         ob.setspeed(3.5f);
        
-       
         ob1= new Obstacle();
         ob1.setup(160,200,20);
         ob1.setboundaries(160,0,0,540);
@@ -75,6 +74,41 @@ public class App extends PApplet {
         ob2.setup(160,300,20);
         ob2.setboundaries(160,0,0,540);
         ob2.setspeed(15);
+
+        ob3= new Obstacle();                                //fix!
+        ob3.setboundaries(0,0,140,0);
+        ob3.setspeed(3.5f);
+        ob3.direction=true;
+
+        ob4= new Obstacle();
+        ob4.setup(310,415,20);
+        ob4.setboundaries(310,0,0,540);
+        ob4.setspeed(4);
+
+        ob5= new Obstacle();
+        ob5.setup(600,460,20);
+        ob5.setboundaries(0,460,590,0); //challenge
+        ob5.setspeed(3.5f); 
+        ob5.direction=true; 
+        ob5.debug_print = true; //part of solution
+
+        ob6= new Obstacle();
+        ob6.setup(560,400,20);
+        ob6.setboundaries(560,0,0,790);
+        ob6.setspeed(3.5f);  
+
+        ob7= new Obstacle();
+        ob7.setup(560,250,20);
+        ob7.setboundaries(560,0,0,690);
+        ob7.setspeed(3.5f);  
+
+
+       
+
+
+
+
+
 
         
 
@@ -123,6 +157,11 @@ public class App extends PApplet {
         ob.draw(this); 
         ob1.draw(this);
         ob2.draw(this);
+        ob3.draw(this);
+        ob4.draw(this);
+        ob5.draw(this);
+        ob6.draw(this);
+        ob7.draw(this);
         textSize(20);
         text("finish",725,325); 
         
@@ -143,7 +182,29 @@ public class App extends PApplet {
         if (tri.IntersectsWithObstacle(ob2)) {
             resetTriangle();  // Reset triangle to starting position if it touches the obstacle
         }
+
+        if (tri.IntersectsWithObstacle(ob3)) {
+            resetTriangle();  
+        }
+        if (tri.IntersectsWithObstacle(ob4)) {
+            resetTriangle();  
+        }
+        if (tri.IntersectsWithObstacle(ob5)) {
+            resetTriangle();  
+        }
+        if (tri.IntersectsWithObstacle(ob6)) {
+            resetTriangle();  
+
+        }
+        if (tri.IntersectsWithObstacle(ob7)) {
+            resetTriangle();  
+
+        }
+        
     }
+
+
+
         
 
 

@@ -43,7 +43,7 @@ public class Obstacle {
         bottom.draw(p);
 
         if (debug_print) {
-            System.out.println("top.y: " + top.y1 + "   "  +obj_position_y); //helped figure out solution
+            //System.out.println("top.y: " + top.y1 + "   "  +obj_position_y); //helped figure out solution
         }
 
         if (direction == true) {

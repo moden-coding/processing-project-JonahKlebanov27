@@ -5,12 +5,18 @@ public class App extends PApplet {
 
     
     MyTriangle tri; 
-    MyLine line, line2, line3, line4, line5, line6, line7,line8,line9,line10,line11,line12,line13,line14,line15,line16;
+    MyLine line, line2, line3, line4, line5, line6, line7,line8,line9,line10,line11,line12,line13,line14,line15,line16,finishLine;
     float speed = 10; 
     Obstacle ob,ob1,ob2,ob3,ob4,ob5,ob6,ob7;
       
     float initialCenterX = 50;
     float initialCenterY = 550;
+   
+   
+     
+    long startTime;
+    long gameTime;
+    int gameState = 0; 
 
     
        public static void main(String[] args) {
@@ -39,6 +45,7 @@ public class App extends PApplet {
         line14= new MyLine();
         line15= new MyLine();
         line16= new MyLine();
+        finishLine= new MyLine();
 
 
         line.setup(150,150,150,500);
@@ -57,6 +64,7 @@ public class App extends PApplet {
         line14.setup(800,350,700,350);
         line15.setup(700,350,700,200);
         line16.setup(400,0,400,75); 
+        finishLine.setup(800, 325,700, 325);
 
         
         
@@ -76,6 +84,7 @@ public class App extends PApplet {
         ob2.setspeed(15);
 
         ob3= new Obstacle();                                //fix!
+        ob3.setup(200,0,20);
         ob3.setboundaries(0,0,140,0);
         ob3.setspeed(3.5f);
         ob3.direction=true;
@@ -95,12 +104,15 @@ public class App extends PApplet {
         ob6= new Obstacle();
         ob6.setup(560,400,20);
         ob6.setboundaries(560,0,0,790);
-        ob6.setspeed(3.5f);  
+        ob6.setspeed(4.5f);  
 
         ob7= new Obstacle();
         ob7.setup(560,250,20);
         ob7.setboundaries(560,0,0,690);
         ob7.setspeed(3.5f);  
+
+        startTime = System.currentTimeMillis() / 1000;
+        
 
 
        
@@ -117,17 +129,51 @@ public class App extends PApplet {
 
     }
 
+    public void draw(){
+        if(gameState==0){
+            showStartScreen(); 
 
+        }else if(gameState==1){
+            runGame();
+        }if(gameState==2){
+            showEndScreen();
+        }
+
+        
+    }
+       
+    void showStartScreen() {
+        background(0,0,250);
+        textSize(30);
+        text("Instructions: Use the arrow keys to control the player. \n Your objective is to avoid the obstacles and make it to the end" ,400,200 );
+        textSize(40);
+        fill(255);
+        textAlign(CENTER, CENTER);
+        text("Press SPACE to Start", width / 2, height / 2);
+
+      }
+
+      void showEndScreen(){
+        background(0,0,250);
+        textSize(30);
+        fill(255);
+        text("your time was: " + gameTime, 400, 200); 
+        textSize(40);
+        text("Press ENTER to play again", 400,300);
 
     
 
+
+      }
+      
+      
 
     public void settings() {
         size(800, 600);
     }
 
-    public void draw() {
-        //System.out.println(frameCount);
+    public void runGame() {
+        //System.out.println("runGame: " + frameCount);
         background(0, 175, 90);
         fill(0, 90, 175);
         stroke(200, 0, 0);
@@ -152,7 +198,8 @@ public class App extends PApplet {
         line13.draw(this);
         line14.draw(this);
         line15.draw(this);
-        line16.draw(this);
+        line16.draw(this); 
+        finishLine.draw(this);
 
         ob.draw(this); 
         ob1.draw(this);
@@ -163,8 +210,21 @@ public class App extends PApplet {
         ob6.draw(this);
         ob7.draw(this);
         textSize(20);
-        text("finish",725,325); 
+        text("finish",750,335); 
         
+        long currentTimeInSeconds = (System.currentTimeMillis() / 1000) - startTime;
+        text("Timer: " + currentTimeInSeconds, 700,50); 
+
+        gameTime=currentTimeInSeconds;
+        
+        if(tri.IntersectsWithLine(finishLine)){
+            resetTriangle();
+            gameState=2;
+
+
+        
+           
+        }
         
 
         
@@ -183,8 +243,8 @@ public class App extends PApplet {
             resetTriangle();  // Reset triangle to starting position if it touches the obstacle
         }
 
-        if (tri.IntersectsWithObstacle(ob3)) {
-            resetTriangle();  
+         if (tri.IntersectsWithObstacle(ob3)) {
+           resetTriangle();  
         }
         if (tri.IntersectsWithObstacle(ob4)) {
             resetTriangle();  
@@ -211,11 +271,12 @@ public class App extends PApplet {
         
 
     
-
       
     public void resetTriangle() {
         // Reset the triangle to the initial starting position
         tri.setup(initialCenterX, initialCenterY);
+
+        startTime = System.currentTimeMillis() / 1000;
     }
 
     public void keyPressed() {
@@ -231,8 +292,18 @@ public class App extends PApplet {
         } else if (keyCode == RIGHT && !willTriangleCrossLine(speed, 0)) {
             
                 moveTriangle(speed, 0);
+            
             }
 
+            if (gameState == 0 && key == ' ') {
+                gameState = 1;
+                startTime = System.currentTimeMillis() / 1000;  // Reset the timer when the game starts
+              }else if(gameState == 2 && key == '\n'){
+                gameState = 1;
+                gameTime=0;
+                
+              }
+                  
 
         }
 
@@ -279,7 +350,7 @@ public class App extends PApplet {
 
         }
 
-        
+       
 
         
     }

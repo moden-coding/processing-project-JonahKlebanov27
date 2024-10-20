@@ -54,6 +54,9 @@ public class MyTriangle {
         }
 
     }
+      
+
+     //ChatGPT code for triangle intersecting with lines
 
     public boolean IntersectsWithLine(MyLine line) {
         return IntersectsWithLine(line.x1, line.y1, line.x2, line.y2);

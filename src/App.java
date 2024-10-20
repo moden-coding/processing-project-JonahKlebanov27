@@ -6,16 +6,16 @@ public class App extends PApplet {
     
     MyTriangle tri; 
     MyLine line, line2, line3, line4, line5, line6, line7,line8,line9,line10,line11,line12,line13,line14,line15,line16,finishLine;
-    float speed = 10; 
+    float speed = 5; //speed of triangle
     Obstacle ob,ob1,ob2,ob3,ob4,ob5,ob6,ob7;
       
-    float initialCenterX = 50;
+    float initialCenterX = 50; //start position of triangle
     float initialCenterY = 550;
    
    
      
-    long startTime;
-    long gameTime;
+    long startTime; //timer
+    long gameTime; //timer
     int gameState = 0; 
 
     
@@ -24,10 +24,9 @@ public class App extends PApplet {
     }
 
     public void setup() {
-        //float centerX = 50;
-        //float centerY = 550;
+       
         tri = new MyTriangle();
-        //tri.setup(centerX, centerY); 
+        
         tri.setup(initialCenterX,initialCenterY);
         line = new MyLine();
         line2= new MyLine();
@@ -83,7 +82,7 @@ public class App extends PApplet {
         ob2.setboundaries(160,0,0,540);
         ob2.setspeed(15);
 
-        ob3= new Obstacle();                                //fix!
+        ob3= new Obstacle();                               
         ob3.setup(200,0,20);
         ob3.setboundaries(0,0,140,0);
         ob3.setspeed(3.5f);
@@ -111,7 +110,7 @@ public class App extends PApplet {
         ob7.setboundaries(560,0,0,690);
         ob7.setspeed(3.5f);  
 
-        startTime = System.currentTimeMillis() / 1000;
+        startTime = System.currentTimeMillis() / 1000; //timer
         
 
 
@@ -133,7 +132,7 @@ public class App extends PApplet {
         if(gameState==0){
             showStartScreen(); 
 
-        }else if(gameState==1){
+        }else if(gameState==1){  //for multiple screens
             runGame();
         }if(gameState==2){
             showEndScreen();
@@ -173,7 +172,9 @@ public class App extends PApplet {
     }
 
     public void runGame() {
-        //System.out.println("runGame: " + frameCount);
+
+ 
+       
         background(0, 175, 90);
         fill(0, 90, 175);
         stroke(200, 0, 0);
@@ -215,7 +216,7 @@ public class App extends PApplet {
         long currentTimeInSeconds = (System.currentTimeMillis() / 1000) - startTime;
         text("Timer: " + currentTimeInSeconds, 700,50); 
 
-        gameTime=currentTimeInSeconds;
+        gameTime=currentTimeInSeconds;         
         
         if(tri.IntersectsWithLine(finishLine)){
             resetTriangle();
@@ -260,6 +261,8 @@ public class App extends PApplet {
             resetTriangle();  
 
         }
+        handleMovement();
+
         
     }
 
@@ -279,20 +282,45 @@ public class App extends PApplet {
         startTime = System.currentTimeMillis() / 1000;
     }
 
-    public void keyPressed() {
-        System.out.println("key pressed");
+    public void keyReleased()
+    {
+        keyDown = 0;
+    }
 
-        if (keyCode == UP && !willTriangleCrossLine(0, -speed)) {
+    public int keyDown=0; // 1 is UP,  2 is DOWN,  3 is LEFT,  4 is RIGHT
 
+    public void handleMovement()
+    {
+        if (keyDown == 1 && !willTriangleCrossLine(0, -speed)) {
             moveTriangle(0, -speed);
-        } else if (keyCode == DOWN && !willTriangleCrossLine(0, speed)) {
+        }
+        else if (keyDown == 2 && !willTriangleCrossLine(0, speed)) {
             moveTriangle(0, speed);
-        } else if (keyCode == LEFT && !willTriangleCrossLine(-speed, 0)) {
+        }
+        else if (keyDown == 3 && !willTriangleCrossLine( -speed, 0)) {
             moveTriangle(-speed, 0);
-        } else if (keyCode == RIGHT && !willTriangleCrossLine(speed, 0)) {
+        }
+        else if (keyDown == 4 && !willTriangleCrossLine( speed, 0)) {
+            moveTriangle(speed, 0);
+        }
+    }
+
+    public void keyPressed() {
+       
+
+        if (keyCode == UP) { 
+            keyDown = 1;
             
-                moveTriangle(speed, 0);
+        } else if (keyCode == DOWN){
+            keyDown = 2;
             
+        } else if (keyCode == LEFT) { 
+            keyDown = 3;
+            
+        } else if (keyCode == RIGHT) { 
+            keyDown = 4;
+            
+               
             }
 
             if (gameState == 0 && key == ' ') {
